@@ -1,0 +1,87 @@
+{% extends "index.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<style>
+    .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+    }
+    @media (max-width: 767px) {
+        .markdown-body {
+            padding: 15px;
+        }
+    }
+    /* Markdown样式 */
+    pre {
+        background-color: var(--code-bg);
+        border-radius: 3px;
+        padding: 16px;
+        overflow: auto;
+        border: 1px solid var(--border-color);
+    }
+    code {
+        background-color: var(--code-bg);
+        border-radius: 3px;
+        padding: 0.2em 0.4em;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    table, th, td {
+        border: 1px solid var(--border-color);
+    }
+    th, td {
+        padding: 6px 13px;
+    }
+    blockquote {
+        border-left: 4px solid var(--border-color);
+        color: var(--text-color);
+        padding: 0 1em;
+        margin-left: 0;
+        opacity: 0.8;
+    }
+    .admonition {
+        padding: 12px;
+        margin: 1em 0;
+        border-left: 4px solid var(--link-color);
+        background-color: var(--sidebar-bg);
+    }
+    .admonition-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+</style>
+
+<div class="markdown-body">
+    {{ content|safe }}
+</div>
+
+<script>
+    // 根据主题切换代码高亮样式
+    function updateCodeHighlight() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const link = document.querySelector('link[href*="highlight.js"]');
+        if (theme === 'dark') {
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css';
+        } else {
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css';
+        }
+        hljs.highlightAll();
+    }
+
+    // 监听主题变化
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCodeHighlight();
+        document.addEventListener('themeChanged', updateCodeHighlight);
+    });
+</script>
+{% endblock %}
